@@ -2,7 +2,7 @@ import { Github } from "lucide-react"
 
 export const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-[#c8e6c9]/90 backdrop-blur-sm py-4 z-20 shadow-lg border-t border-[#c8e6c9]">
+    <footer className="fixed bottom-0 left-0 right-0 bg-green-200 backdrop-blur-sm py-4 z-20 shadow-lg border-t border-[#c8e6c9]">
       <div className="text-center flex items-center justify-center gap-3">
         <p className="text-gray-700 text-sm" style={{ fontFamily: "'DM Sans', sans-serif" }}>
           Made by <span className="font-extrabold underline hover:text-gray-900 transition-colors">Zuhair Aziz</span>{" "}

@@ -1,6 +1,6 @@
 // src/components/recipe-finder/circle-layout/circle-layout.tsx
 import { topCluster, rightCluster, bottomCluster, leftCluster } from "../image-clusters/constants"
-import { SearchInterface } from "../search/search-interface"
+import SearchInterface from "@/components/recipe-finder/search/search-interface"
 import "./styles.css"
 
 interface CircleLayoutProps {

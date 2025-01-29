@@ -2,24 +2,20 @@
 
 import { useState, useEffect } from "react"
 import { NavBar } from "@/components/recipe-finder/nav/nav-bar"
-import { CircleLayout } from "@/components/recipe-finder/circle-layout/circle-layout"
 import { Footer } from "@/components/recipe-finder/footer/footer"
+import SearchInterface from "@/components/recipe-finder/search/search-interface"
 
 export default function RecipeFinder() {
-  const [mounted, setMounted] = useState(false)
-  const [showSteps, setShowSteps] = useState(false)
-
-
+  
   return (
-    <main
-      className="h-screen relative overflow-hidden"
-      style={{
-        backgroundColor: "#F5E6D3",
-      }}
-    >
-      <NavBar />
-      <CircleLayout onSearchClick={() => {}} />
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1">
+        <div className="py-12">
+          <SearchInterface onSearchClick={() => {}} />
+        </div>
+      </main>
+
       <Footer />
-    </main>
+    </div>
   )
 }
