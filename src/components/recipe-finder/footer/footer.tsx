@@ -6,7 +6,7 @@ export const Footer = () => {
       <div className="text-center flex items-center justify-center gap-3">
         <p className="text-gray-700 text-sm" style={{ fontFamily: "'DM Sans', sans-serif" }}>
           Made by <span className="font-extrabold underline hover:text-gray-900 transition-colors">Zuhair Aziz</span>{" "}
-          <span className="font-extrabold">v1.01</span>
+          <span className="text-gray-700 text-sm">v1.5</span>
         </p>
         <div className="h-4 w-px bg-gray-300"></div>
         <a
