@@ -50,11 +50,11 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
   const [hasSearched, setHasSearched] = useState(false)
 
   const placeholders = [
-    "Enter ingredients, e.g., nasi, ayam, cili",
-    "Try 'ikan, udang, bawang'",
-    "How about 'daging, kentang, wortel'?",
-    "Search for 'telur, keju, roti'",
-    "Nak Masak Sayur? Try 'bayam, tahu, tempe'",
+    "Masukkan bahan yang ada, e.g., nasi, ayam, cili",
+    "Cuba 'ikan, udang, bawang'",
+    "Macam mana dengan 'daging, kentang, wortel'?",
+    "Cari untuk 'telur, keju, roti'",
+    "Nak Masak Sayur? Try 'bayam, kailan, terung'",
   ]
 
   const handleIngredientClick = (ingredient: string) => {
@@ -137,14 +137,14 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
                         <span>Searching...</span>
                       </div>
                     ) : (
-                      "Find Recipe by Ingredients"
+                      "Cari Resepi Mengikut Bahan"
                     )}
                   </button>
                 </form>
 
                 {/* Most Used Ingredients */}
                 <div className="text-left mb-12">
-                  <h3 className="text-gray-600 mb-4 font-medium">Most used ingredients:</h3>
+                  <h3 className="text-gray-600 mb-4 font-medium">Contoh bahan-bahan:</h3>
                   <div className="flex flex-wrap gap-2">
                     {COMMON_INGREDIENTS.map((ingredient) => (
                       <button
