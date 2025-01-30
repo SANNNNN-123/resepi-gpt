@@ -38,7 +38,7 @@ export function PlaceholdersAndVanishInput({
   return (
     <div
       className={cn(
-        "w-full relative max-w-2xl mx-auto bg-white dark:bg-gray-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0px_2px_3px_-1px_rgba(255,255,255,0.1)] transition duration-200",
+        "w-full relative max-w-2xl mx-auto bg-white dark:bg-gray-800 h-14 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0px_2px_3px_-1px_rgba(255,255,255,0.1)] transition duration-200",
         value && "bg-gray-50 dark:bg-gray-700",
       )}
     >
@@ -51,6 +51,7 @@ export function PlaceholdersAndVanishInput({
         onChange={onChange}
         className={cn(
           "w-full relative text-sm sm:text-base z-50 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white h-full rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent pl-12 pr-4 sm:pl-12 sm:pr-20",
+          "focus:border-2 focus:border-gray-300 dark:focus:border-gray-500",
           value && "bg-gray-50 dark:bg-gray-700",
         )}
         placeholder={placeholders[currentPlaceholder]}

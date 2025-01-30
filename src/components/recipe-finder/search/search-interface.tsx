@@ -1,7 +1,7 @@
 // src/components/recipe-finder/search/search-interface.tsx
-import { Search } from "lucide-react"
+import { Check } from "lucide-react"
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import Header from "../header/header"
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input"
 
@@ -42,12 +42,21 @@ const COMMON_INGREDIENTS = [
   "pasta",
 ]
 
+const transitionProps = {
+  type: "spring",
+  stiffness: 500,
+  damping: 30,
+  mass: 0.5,
+}
+
 const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
   const [searchQuery, setSearchQuery] = useState("")
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [hasSearched, setHasSearched] = useState(false)
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([])
+
 
   const placeholders = [
     "Masukkan bahan yang ada, e.g., nasi, ayam, cili",
@@ -56,6 +65,22 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
     "Cari untuk 'telur, keju, roti'",
     "Nak Masak Sayur? Try 'bayam, kailan, terung'",
   ]
+
+  const toggleIngredient = (ingredient: string) => {
+    setSelectedIngredients((prev) =>
+      prev.includes(ingredient) ? prev.filter((i) => i !== ingredient) : [...prev, ingredient],
+    )
+    setSearchQuery((prevQuery) => {
+      const ingredients = prevQuery
+        .split(",")
+        .map((i) => i.trim())
+        .filter((i) => i !== "")
+      if (!ingredients.includes(ingredient)) {
+        return [...ingredients, ingredient].join(", ")
+      }
+      return prevQuery
+    })
+  }
 
   const handleIngredientClick = (ingredient: string) => {
     setSearchQuery((prevQuery) => {
@@ -129,7 +154,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:bg-gray-400 text-xl font-medium shadow-sm"
+                    className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-3xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:bg-gray-400 text-xl font-medium shadow-sm"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center gap-2">
@@ -144,18 +169,67 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
 
                 {/* Most Used Ingredients */}
                 <div className="text-left mb-12">
-                  <h3 className="text-gray-600 mb-4 font-medium">Contoh bahan-bahan:</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {COMMON_INGREDIENTS.map((ingredient) => (
-                      <button
-                        key={ingredient}
-                        onClick={() => handleIngredientClick(ingredient)}
-                        className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-300 transition-all duration-200 text-sm font-medium"
-                      >
-                        {ingredient}
-                      </button>
-                    ))}
-                  </div>
+                  <h3 className="text-gray-600 dark:text-gray-300 transition-colors mb-4 font-medium">Contoh bahan-bahan:</h3>
+                  <motion.div className="flex flex-wrap gap-3 overflow-visible" layout transition={transitionProps}>
+                    {COMMON_INGREDIENTS.map((ingredient) => {
+                      const isSelected = selectedIngredients.includes(ingredient)
+                      return (
+                        <motion.button
+                          key={ingredient}
+                          onClick={() => toggleIngredient(ingredient)}
+                          layout
+                          initial={false}
+                          animate={{
+                            backgroundColor: isSelected ? "#f3f4f6" : "#f3f4f6",
+                          }}
+                          whileHover={{
+                            backgroundColor: isSelected ? "#e5e7eb" : "#e5e7eb",
+                          }}
+                          whileTap={{
+                            backgroundColor: isSelected ? "#d1d5db" : "#d1d5db",
+                          }}
+                          transition={{
+                            ...transitionProps,
+                            backgroundColor: { duration: 0.1 },
+                          }}
+                          className={`
+                            inline-flex items-center px-4 py-2 rounded-full text-base font-medium
+                            whitespace-nowrap overflow-hidden
+                            ${isSelected ? "text-gray-900 bg-gray-100" : "text-gray-800 bg-gray-100"}
+                          `}
+                        >
+                          <motion.div
+                            className="relative flex items-center"
+                            animate={{
+                              width: isSelected ? "auto" : "100%",
+                              paddingRight: isSelected ? "1.5rem" : "0",
+                            }}
+                            transition={{
+                              ease: [0.175, 0.885, 0.32, 1.275],
+                              duration: 0.3,
+                            }}
+                          >
+                            <span>{ingredient}</span>
+                            <AnimatePresence>
+                              {isSelected && (
+                                <motion.span
+                                  initial={{ scale: 0, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  exit={{ scale: 0, opacity: 0 }}
+                                  transition={transitionProps}
+                                  className="absolute right-0"
+                                >
+                                  <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
+                                    <Check className="w-3 h-3 text-white" strokeWidth={1.5} />
+                                  </div>
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        </motion.button>
+                      )
+                    })}
+                  </motion.div>
                 </div>
 
                 {/* Rating Container */}
@@ -169,7 +243,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
                         </svg>
                       ))}
                     </div>
-                    <span className="text-gray-600">from my wife</span>
+                    <span className="text-gray-600 dark:text-gray-300 transition-colors">from my wife</span>
                   </div>
                   <div className="relative">
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-500 animate-pulse">
@@ -269,7 +343,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
 
         {!isLoading && hasSearched && recipes.length === 0 && !error && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center mt-12">
-            <div className="inline-block p-6 bg-gray-50 rounded-2xl">
+            <div className="inline-block p-6 bg-red-100 rounded-2xl">
               <p className="text-gray-600 text-lg">No recipes found. Try different ingredients!</p>
             </div>
           </motion.div>
