@@ -104,7 +104,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
   }
 
   return (
-    <div className="min-h-screen overflow-hidden bg-white">
+    <div className="min-h-screen overflow-hidden bg-white dark:bg-gray-900">
       <div className="w-full max-w-[1600px] mx-auto px-6 pt-24 pb-14">
         {/* Only show header and search when no results */}
         {!recipes.length && (
@@ -129,7 +129,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-black text-white rounded-xl hover:bg-gray-800 transition-colors disabled:bg-gray-400 text-xl font-medium shadow-sm"
+                    className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:bg-gray-400 text-xl font-medium shadow-sm"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center gap-2">
