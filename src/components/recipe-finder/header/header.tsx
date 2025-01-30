@@ -1,9 +1,9 @@
 const Header = () => {
   return (
-    <div className="text-center mb-4">
-      <h1 className="max-w-2xl mx-auto tracking-tight">
-        <div className="text-[48px] leading-[1.1] font-bold font-poppins">Masak Senang dengan</div>
-        <div className="text-[72px] leading-[1.1] font-extrabold font-poppins">
+    <div className="text-center mb-16 px-2 py-0">
+      <h1 className="max-w-2xl mx-auto tracking-tight mb-8">
+        <div className="text-3xl font-bold mb-2">Masak Senang dengan</div>
+        <div className="text-5xl font-extrabold">
           <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 text-transparent bg-clip-text">
             Resepi GPT
           </span>
@@ -14,4 +14,5 @@ const Header = () => {
 }
 
 export default Header
+
 

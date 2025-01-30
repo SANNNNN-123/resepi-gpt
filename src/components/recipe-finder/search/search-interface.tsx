@@ -3,6 +3,7 @@ import { Search } from "lucide-react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import Header from "../header/header"
+import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input"
 
 interface Recipe {
   id: string
@@ -28,6 +29,9 @@ interface SearchInterfaceProps {
 const COMMON_INGREDIENTS = [
   "nasi",
   "ayam",
+  "ikan",
+  "udang",
+  "daging",
   "telur",
   "keju",
   "bawang",
@@ -45,6 +49,14 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
   const [error, setError] = useState("")
   const [hasSearched, setHasSearched] = useState(false)
 
+  const placeholders = [
+    "Enter ingredients, e.g., nasi, ayam, cili",
+    "Try 'ikan, udang, bawang'",
+    "How about 'daging, kentang, wortel'?",
+    "Search for 'telur, keju, roti'",
+    "Nak Masak Sayur? Try 'bayam, tahu, tempe'",
+  ]
+
   const handleIngredientClick = (ingredient: string) => {
     setSearchQuery((prevQuery) => {
       const ingredients = prevQuery
@@ -56,6 +68,10 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
       }
       return prevQuery
     })
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value)
   }
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -88,7 +104,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white font-outfit">
+    <div className="min-h-screen overflow-hidden bg-white">
       <div className="w-full max-w-[1600px] mx-auto px-6 pt-24 pb-14">
         {/* Only show header and search when no results */}
         {!recipes.length && (
@@ -99,16 +115,13 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
             <div className="flex flex-col items-center mb-8">
               <div className="w-full max-w-2xl">
                 <form onSubmit={handleSearch} className="relative mb-8 space-y-2">
-                  {/* Search Input */}
+                  {/* Search Input with PlaceholdersAndVanishInput */}
                   <div className="relative mb-4">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Search className="text-gray-400" size={20} />
-                    </div>
-                    <input
+                    <PlaceholdersAndVanishInput
+                      placeholders={placeholders}
+                      onChange={handleInputChange}
+                      onSubmit={handleSearch}
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Enter ingredients separated by comma, e.g., nasi, ayam, cili"
-                      className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-green-100 focus:border-green-200 focus:ring-2 focus:ring-green-100 focus:outline-none text-lg shadow-sm transition-all font-outfit"
                     />
                   </div>
 
@@ -116,7 +129,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-colors disabled:bg-green-300 text-xl font-medium shadow-sm font-dm-sans"
+                    className="w-full py-4 bg-black text-white rounded-xl hover:bg-gray-800 transition-colors disabled:bg-gray-400 text-xl font-medium shadow-sm"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center gap-2">
@@ -131,13 +144,13 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
 
                 {/* Most Used Ingredients */}
                 <div className="text-left mb-12">
-                  <h3 className="text-gray-600 mb-4 font-medium font-dm-sans">Most used ingredients:</h3>
+                  <h3 className="text-gray-600 mb-4 font-medium">Most used ingredients:</h3>
                   <div className="flex flex-wrap gap-2">
                     {COMMON_INGREDIENTS.map((ingredient) => (
                       <button
                         key={ingredient}
                         onClick={() => handleIngredientClick(ingredient)}
-                        className="px-4 py-2 bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition-all duration-200 text-sm font-medium font-outfit"
+                        className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-300 transition-all duration-200 text-sm font-medium"
                       >
                         {ingredient}
                       </button>
