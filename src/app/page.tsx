@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Analytics } from "@vercel/analytics/react"
 import { NavBar } from "@/components/recipe-finder/nav/nav-bar"
 import { Footer } from "@/components/recipe-finder/footer/footer"
 import SearchInterface from "@/components/recipe-finder/search/search-interface"
@@ -19,6 +20,7 @@ export default function RecipeFinder() {
         <SearchInterface key={key} />
       </main>
       <Footer />
+      <Analytics />
     </div>
   )
 }

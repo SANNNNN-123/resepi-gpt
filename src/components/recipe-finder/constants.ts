@@ -5,19 +5,19 @@ export const COMMON_INGREDIENTS = [
   "udang",
   "daging",
   "telur",
-  "keju",
+  "sotong",
   "bawang",
   "lada",
-  "bawang putih",
+  "kentang",
   "tomato",
-  "garam",
+  "sup",
   "pasta",
 ]
 
 export const PLACEHOLDERS = [
   "Masukkan bahan yang ada, e.g., nasi, ayam, cili",
   "Cuba 'ikan, udang, bawang'",
-  "Macam mana dengan 'daging, kentang, wortel'?",
+  "Macam mana dengan 'daging, kentang, bawang'?",
   "Cari untuk 'telur, keju, roti'",
   "Nak Masak Sayur? Try 'bayam, kailan, terung'",
 ]
