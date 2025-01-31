@@ -17,6 +17,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Resepi GPT",
   description: "Resepi GPT",
+  icons: {
+    icon: '/chef_icon.svg',
+  },
 };
 
 export default function RootLayout({

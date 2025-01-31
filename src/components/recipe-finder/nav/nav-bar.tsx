@@ -4,21 +4,26 @@ import { Toggle } from "@/components/ui/toggle"
 import Link from "next/link"
 import { useTheme } from "@/components/theme-provider"
 
-export function NavBar() {
+interface NavBarProps {
+  onHomeClick: () => void
+}
+
+export function NavBar({ onHomeClick }: NavBarProps) {
   const { theme, setTheme } = useTheme()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b dark:border-gray-800">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto flex items-center justify-between h-14">
-          <Link href="/" className="flex items-center gap-3">
-            <ChefHat className="h-6 w-6 mt-1 dark:text-white" />
+          <Link href="/" className="flex items-center gap-2">
+            <img src="/chef_icon.svg" alt="Chef Icon" className="h-6 w-6 dark:invert" />
             <span className="text-m font-semibold dark:text-white">Resepi GPT</span>
           </Link>
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
               className="text-gray-800 dark:text-gray-200 hover:text-black dark:hover:text-white rounded-full p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              onClick={onHomeClick}
             >
               <Home className="h-6 w-6" />
             </Button>

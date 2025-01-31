@@ -74,10 +74,6 @@ export function RecipeDetail({ recipe, onClose }: RecipeDetailProps) {
               <p className="text-gray-500 dark:text-gray-400">Masa Memasak</p>
               <p className="font-semibold text-gray-900 dark:text-gray-100">{recipe.cooking_time}</p>
             </div>
-            <div className="text-center">
-              <p className="text-gray-500 dark:text-gray-400">Hidangan</p>
-              <p className="font-semibold text-gray-900 dark:text-gray-100">{recipe.servings}</p>
-            </div>
           </div>
 
           {/* Ingredients */}

@@ -1,17 +1,13 @@
 // src/components/recipe-finder/search/search-interface.tsx
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import Header from "../header/header"
 import { RecipeDetail } from "../recipe/recipe-detail"
 import { RecipeList } from "../recipe/recipe-list"
 import { IngredientTag } from "./ingredient-tag"
-import { COMMON_INGREDIENTS, PLACEHOLDERS } from "../constants"
+import { COMMON_INGREDIENTS } from "../constants"
 import type { Recipe } from "../types"
 import { SearchInput } from "./search-input"
-
-interface SearchInterfaceProps {
-  onSearchClick: () => void
-}
 
 const transitionProps = {
   type: "spring",
@@ -20,7 +16,7 @@ const transitionProps = {
   mass: 0.5,
 }
 
-const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
+const SearchInterface = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -29,31 +25,10 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([])
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null)
 
-  const placeholders = [
-    "Masukkan bahan yang ada, e.g., nasi, ayam, cili",
-    "Cuba 'ikan, udang, bawang'",
-    "Macam mana dengan 'daging, kentang, wortel'",
-    "Cari untuk 'telur, keju, roti'",
-    "Nak Masak Sayur? Try 'bayam, kailan, terung'",
-  ]
-
   const toggleIngredient = (ingredient: string) => {
     setSelectedIngredients((prev) =>
-      prev.includes(ingredient) ? prev.filter((i) => i !== ingredient) : [...prev, ingredient],
+      prev.includes(ingredient) ? prev.filter((i) => i !== ingredient) : [...prev, ingredient]
     )
-    setSearchQuery((prevQuery) => {
-      const ingredients = prevQuery
-        .split(",")
-        .map((i) => i.trim())
-        .filter((i) => i !== "")
-      if (!ingredients.includes(ingredient)) {
-        return [...ingredients, ingredient].join(", ")
-      }
-      return prevQuery
-    })
-  }
-
-  const handleIngredientClick = (ingredient: string) => {
     setSearchQuery((prevQuery) => {
       const ingredients = prevQuery
         .split(",")
@@ -79,15 +54,11 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
     try {
       const response = await fetch("/api/search", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ingredients: searchQuery }),
       })
 
-      if (!response.ok) {
-        throw new Error("Search failed")
-      }
+      if (!response.ok) throw new Error("Search failed")
 
       const data = await response.json()
       setRecipes((data.recipes || []).slice(0, 4))
@@ -102,12 +73,9 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
   return (
     <div className="min-h-screen overflow-hidden bg-white dark:bg-gray-900">
       <div className="w-full max-w-[1600px] mx-auto px-6 pt-24 pb-14">
-        {/* Only show header and search when no results */}
         {!recipes.length && (
           <>
             <Header />
-
-            {/* Search Section */}
             <div className="flex flex-col items-center mb-8">
               <div className="w-full max-w-2xl">
                 <SearchInput
@@ -117,9 +85,10 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
                   isLoading={isLoading}
                 />
 
-                {/* Most Used Ingredients */}
                 <div className="text-left mb-12">
-                  <h3 className="text-gray-800 dark:text-gray-300 transition-colors mb-4 font-medium">Contoh bahan-bahan:</h3>
+                  <h3 className="text-gray-800 dark:text-gray-300 transition-colors mb-4 font-medium">
+                    Contoh bahan-bahan:
+                  </h3>
                   <motion.div className="flex flex-wrap gap-3 overflow-visible" layout transition={transitionProps}>
                     {COMMON_INGREDIENTS.map((ingredient) => (
                       <IngredientTag
@@ -146,18 +115,18 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
                     <span className="text-gray-600 dark:text-gray-300 transition-colors">from my wife</span>
                   </div>
                   <div className="relative">
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-500 animate-pulse">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-purple-500 animate-pulse">
                       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                     </svg>
-                    <div className="absolute inset-0 bg-red-500/25 blur-sm rounded-full animate-pulse" />
+                    <div className="absolute inset-0 bg-purple-500/25 blur-sm rounded-full animate-pulse" />
                   </div>
                 </div>
+
               </div>
             </div>
           </>
         )}
 
-        {/* Recipe Cards */}
         {recipes.length > 0 && (
           <RecipeList
             recipes={recipes}
@@ -169,7 +138,6 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
           />
         )}
 
-        {/* Error and Empty State */}
         {error && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -188,13 +156,7 @@ const SearchInterface = ({ onSearchClick }: SearchInterfaceProps) => {
           </motion.div>
         )}
 
-        {/* Add the recipe detail modal */}
-        {selectedRecipe && (
-          <RecipeDetail
-            recipe={selectedRecipe}
-            onClose={() => setSelectedRecipe(null)}
-          />
-        )}
+        {selectedRecipe && <RecipeDetail recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />}
       </div>
     </div>
   )
