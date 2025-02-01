@@ -11,7 +11,8 @@ export const COMMON_INGREDIENTS = [
   "kentang",
   "tomato",
   "sup",
-  "pasta",
+  "cili",
+  "sambal"
 ]
 
 export const PLACEHOLDERS = [
@@ -19,7 +20,7 @@ export const PLACEHOLDERS = [
   "Cuba 'ikan, udang, bawang'",
   "Macam mana dengan 'daging, kentang, bawang'?",
   "Cari untuk 'telur, keju, roti'",
-  "Nak Masak Sayur? Try 'bayam, kailan, terung'",
+  "Nak Masak Sayur? Cuba 'bayam, kailan, terung'",
 ]
 
 export const transitionProps = {

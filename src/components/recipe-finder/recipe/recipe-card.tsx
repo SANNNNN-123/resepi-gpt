@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { Recipe } from "../types"
+import { ImageOff } from "lucide-react"
 
 interface RecipeCardProps {
   recipe: Recipe
@@ -16,16 +17,22 @@ export function RecipeCard({ recipe, index, onViewRecipe }: RecipeCardProps) {
       transition={{ delay: index * 0.1 }}
       className="group bg-white dark:bg-gray-700 rounded-3xl overflow-hidden shadow-md hover:shadow-xl dark:shadow-gray-900/30 transition-all duration-300 transform hover:-translate-y-1"
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden">
-        <img
-          src={recipe.image_url || "/placeholder.svg"}
-          alt={recipe.title}
-          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement
-            target.src = "/default-recipe.jpg"
-          }}
-        />
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+        {recipe.image_url ? (
+          <img
+            src={recipe.image_url}
+            alt={recipe.title}
+            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement
+              target.src = "/default-recipe.jpg"
+            }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <ImageOff className="w-12 h-12 text-gray-400" />
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
       <div className="p-6 text-center">

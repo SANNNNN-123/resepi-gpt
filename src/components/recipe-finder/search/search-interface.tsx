@@ -26,23 +26,24 @@ const SearchInterface = () => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null)
 
   const toggleIngredient = (ingredient: string) => {
-    setSelectedIngredients((prev) =>
-      prev.includes(ingredient) ? prev.filter((i) => i !== ingredient) : [...prev, ingredient]
-    )
-    setSearchQuery((prevQuery) => {
-      const ingredients = prevQuery
-        .split(",")
-        .map((i) => i.trim())
-        .filter((i) => i !== "")
-      if (!ingredients.includes(ingredient)) {
-        return [...ingredients, ingredient].join(", ")
-      }
-      return prevQuery
+    setSelectedIngredients((prev) => {
+      const isSelected = prev.includes(ingredient)
+      const newSelected = isSelected 
+        ? prev.filter(i => i !== ingredient)
+        : [...prev, ingredient]
+
+      // Update search query based on selected ingredients
+      const newQuery = newSelected.join(", ")
+      setSearchQuery(newQuery)
+
+      return newSelected
     })
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
+    // Clear selected ingredients when manually typing
+    setSelectedIngredients([])
   }
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -68,6 +69,14 @@ const SearchInterface = () => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const resetSearch = () => {
+    setRecipes([])
+    setSearchQuery("")
+    setSelectedIngredients([])
+    setHasSearched(false)
+    setError("")
   }
 
   return (
@@ -130,10 +139,7 @@ const SearchInterface = () => {
         {recipes.length > 0 && (
           <RecipeList
             recipes={recipes}
-            onBack={() => {
-              setRecipes([])
-              setHasSearched(false)
-            }}
+            onBack={resetSearch}
             onViewRecipe={setSelectedRecipe}
           />
         )}

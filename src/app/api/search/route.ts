@@ -27,6 +27,35 @@ async function getEmbedding(ingredients: string) {
   }
 }
 
+async function validateIngredients(ingredients: string) {
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: "You are a Malay cooking assistant. Validate if the input contains valid Malay cooking ingredients. Respond with 'valid' or 'invalid' followed by a reason in Malay. Reject any inappropriate, vulgar, or non-food items."
+        },
+        {
+          role: "user",
+          content: `Validate these ingredients: ${ingredients}`
+        }
+      ],
+      temperature: 0.3,
+      max_tokens: 100
+    });
+
+    const result = response.choices[0].message.content?.toLowerCase() || '';
+    return {
+      isValid: result.includes('valid'),
+      message: result.split(':')[1]?.trim() || 'Bahan tidak sah'
+    };
+  } catch (error) {
+    console.error('Validation error:', error);
+    throw error;
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { ingredients } = await request.json();
@@ -34,6 +63,15 @@ export async function POST(request: Request) {
     if (!ingredients) {
       return NextResponse.json(
         { error: 'Ingredients are required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate ingredients first
+    const validation = await validateIngredients(ingredients);
+    if (!validation.isValid) {
+      return NextResponse.json(
+        { error: validation.message },
         { status: 400 }
       );
     }
