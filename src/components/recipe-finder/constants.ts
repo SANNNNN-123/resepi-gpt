@@ -1,5 +1,4 @@
 export const COMMON_INGREDIENTS = [
-  "nasi",
   "ayam",
   "ikan",
   "udang",
