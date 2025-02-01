@@ -10,7 +10,7 @@ const Header = () => {
             Resepi GPT
           </span>
         </div>
-        <div className="text-center text-lg text-muted-foreground mt-2">Percuma. Sumber Terbuka. Penjana Resepi Masakan Melayu.</div> 
+        <div className="text-center text-lg text-muted-foreground mt-2">Percuma. Sumber Terbuka. Pencari Resepi Masakan Melayu.</div> 
       </h1>
     </div>
   )
