@@ -12,10 +12,11 @@ export function NavBar({ onHomeClick }: NavBarProps) {
   const { theme, setTheme } = useTheme()
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b dark:border-gray-800">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 backdrop-blur-sm">
       <div className="container mx-auto px-6">
-        <div className="max-w-3xl mx-auto flex items-center justify-between h-14">
-          <Link href="/" className="flex items-center gap-2">
+        <div className="max-w-3xl mx-auto flex items-center justify-between h-14 relative">
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gray-300 dark:bg-gray-700" style={{ left: '0.1rem', right: '0.1rem' }} />
+          <Link href="/" className="flex items-center gap-2 z-10">
             <img src="/chef_icon.svg" alt="Chef Icon" className="h-6 w-6 dark:invert" />
             <span className="text-m font-semibold dark:text-white">Resepi GPT</span>
           </Link>

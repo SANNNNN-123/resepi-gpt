@@ -14,7 +14,7 @@ export function RecipeCard({ recipe, index, onViewRecipe }: RecipeCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className="group bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl dark:shadow-gray-900/30 transition-all duration-300 transform hover:-translate-y-1"
+      className="group bg-white dark:bg-gray-700 rounded-3xl overflow-hidden shadow-md hover:shadow-xl dark:shadow-gray-900/30 transition-all duration-300 transform hover:-translate-y-1"
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden">
         <img
