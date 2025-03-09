@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Script from "next/script"
 import { Analytics } from "@vercel/analytics/react"
 import { NavBar } from "@/components/recipe-finder/nav/nav-bar"
 import { Footer } from "@/components/recipe-finder/footer/footer"
@@ -21,6 +22,14 @@ export default function RecipeFinder() {
       </main>
       <Footer />
       <Analytics />
+      
+      {/* Umami Analytics */}
+      <Script
+        src="https://cloud.umami.is/script.js"
+        data-website-id="a8d44d16-6cad-4a92-b9ae-3a72a949c452"
+        strategy="afterInteractive"
+        defer
+      />
     </div>
   )
 }
